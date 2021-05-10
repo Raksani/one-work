@@ -1,0 +1,10 @@
+.btn-signin {
+    display: flex ;
+    justify-content: center ;
+}
+
+.link-to-sign-up {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
