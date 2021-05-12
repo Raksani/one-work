@@ -8,7 +8,7 @@ import InputWithHeader from "./../../components/InputWithHeader";
 import "./styled.css";
 import "./../../index.css";
 
-const ResgisterPage = () => {
+const RegisterPage = () => {
   const onChangeDate = (dateString) => {
     const birth = moment(dateString, "YYYY-MM-DD").fromNow().split(" ");
     console.log(birth[0] + birth[1]);
@@ -52,4 +52,4 @@ const ResgisterPage = () => {
   );
 };
 
-export default ResgisterPage;
+export default RegisterPage;
