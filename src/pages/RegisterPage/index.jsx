@@ -19,7 +19,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="regis-container">
+    <div className="blue-container">
       <Card className="card">
         <Space direction="vertical" style={{ width: "100%" }}>
           <h2>Register</h2>

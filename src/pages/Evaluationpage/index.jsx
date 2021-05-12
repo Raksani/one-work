@@ -5,7 +5,7 @@ import './../../index.css'
 
 const EvaluationPage = () => {
   return (
-    <div className="regis-container">
+    <div className="blue-container">
     </div>
   )
 }
