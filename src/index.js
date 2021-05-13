@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
-import OneWorkApp from "./oneWorkApp";
+import OneWorkApp from "./OneWorkApp";
 import reportWebVitals from "./reportWebVitals";
 import { CookiesProvider } from "react-cookie";
 
