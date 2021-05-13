@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Space, Input, Button, Form } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 
 import FormInput from "./../../components/FormInput";
@@ -8,10 +8,19 @@ import FormInput from "./../../components/FormInput";
 import "./../../index.css";
 import "./styled.css";
 
-const SignInPage = () => {
+const SignInPage = ({setCookies}) => {
+  const history = useHistory()
+  const [loginValue, setLoginValue] = useState({})
+
   const onFinish = (values) => {
+    setLoginValue(values)
     console.log("Success:", values);
   };
+
+  const onSubmit = () => {
+    setCookies('role', 'employee', { path: '/' })
+    history.push('/evaluation')
+  }
 
   return (
     <div className="blue-container">
@@ -43,7 +52,7 @@ const SignInPage = () => {
             </Link>
             <Form.Item>
               <div className="btn-signin">
-                <Button type="primary" htmlType="submit">
+                <Button onClick={onSubmit} type="primary" htmlType="submit">
                   Sign In
                 </Button>
               </div>

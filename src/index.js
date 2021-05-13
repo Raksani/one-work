@@ -1,28 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import SignInPage from "./pages/SignInPage";
-import RegisterPage from './pages/RegisterPage';
-import EvaluationPage from './pages/EvaluationPage';
+import { BrowserRouter } from "react-router-dom";
+
+import OneWorkApp from "./oneWorkApp";
 import reportWebVitals from "./reportWebVitals";
+import { CookiesProvider } from "react-cookie";
+
 import "antd/dist/antd.css";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import "./index.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-    <Switch>
-    <Route path="/evaluation">
-        <EvaluationPage/>
-      </Route>
-      <Route path="/register">
-        <RegisterPage/>
-      </Route>
-      <Route path="/">
-        <SignInPage />
-      </Route>
-    </Switch>
-    </BrowserRouter>
+    <CookiesProvider>
+      <BrowserRouter>
+        <OneWorkApp />
+      </BrowserRouter>
+    </CookiesProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
