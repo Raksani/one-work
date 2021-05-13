@@ -11,13 +11,7 @@ import "./styled.css";
 import "./../../index.css";
 
 const ResgisterPage = () => {
-  const [age, setAge] = useState("");
   const [result, setResult] = useState({});
-
-  const onChangeDate = (dateString) => {
-    const birth = moment(dateString, "YYYY-MM-DD").fromNow().split(" ");
-    setAge(`${birth[0]} ${birth[1]}`);
-  };
 
   const disabledDate = (current) => {
     return current && current > moment().endOf("day");
@@ -27,7 +21,6 @@ const ResgisterPage = () => {
     const resultValues = {
       ...fieldsValue,
       date: fieldsValue["date"].format("DD-MM-YYYY"),
-      age: age,
     };
     setResult(resultValues);
     console.log(resultValues);
@@ -41,9 +34,9 @@ const ResgisterPage = () => {
             <h2>Register</h2>
             <div>
               <FormInput
-                label="Username"
-                name="username"
-                message="Please input your username"
+                label="Employee ID"
+                name="employeeID"
+                message="Please input your Employee ID"
               >
                 <Input autocomplete="off" placeholder="Employee ID" />
               </FormInput>
@@ -78,10 +71,8 @@ const ResgisterPage = () => {
                 <DatePicker
                   format="DD-MM-YYYY"
                   disabledDate={disabledDate}
-                  onChange={onChangeDate}
                 />
               </Form.Item>
-              <div>Age: {age}</div>
             </div>
             <div className="btn-regis">
               <Button type="primary" htmlType="submit">

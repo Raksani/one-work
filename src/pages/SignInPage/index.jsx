@@ -20,9 +20,9 @@ const SignInPage = () => {
           <Form onFinish={onFinish}>
             <h2>Sign In</h2>
             <FormInput
-              label="Username"
-              name="username"
-              message="Please input your username"
+              label="Employee ID"
+              name="employeeID"
+              message="Please input your Employee ID"
             >
               <Input
                 autocomplete="off"
