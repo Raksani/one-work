@@ -10,7 +10,7 @@ import ValidatePassword from "./../../components/ValidatePassword";
 import "./styled.css";
 import "./../../index.css";
 
-const ResgisterPage = () => {
+const RegisterPage = () => {
   const [result, setResult] = useState({});
 
   const disabledDate = (current) => {
@@ -27,7 +27,7 @@ const ResgisterPage = () => {
   };
 
   return (
-    <div className="regis-container">
+    <div className="blue-container">
       <Card className="card">
         <Space direction="vertical" style={{ width: "100%" }}>
           <Form onFinish={onFinish}>
@@ -68,10 +68,7 @@ const ResgisterPage = () => {
                   { required: true, message: "Please input your birth date" },
                 ]}
               >
-                <DatePicker
-                  format="DD-MM-YYYY"
-                  disabledDate={disabledDate}
-                />
+                <DatePicker format="DD-MM-YYYY" disabledDate={disabledDate} />
               </Form.Item>
             </div>
             <div className="btn-regis">
@@ -86,4 +83,4 @@ const ResgisterPage = () => {
   );
 };
 
-export default ResgisterPage;
+export default RegisterPage;
