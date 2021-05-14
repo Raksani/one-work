@@ -13,7 +13,7 @@ p {
 }
 
 .card-container {
-  padding-top: 100px;
+  padding: 20px;
 }
 
 .card {
@@ -24,4 +24,9 @@ p {
 
 .btn-submit {
   margin-top: 20px;
+}
+
+.container {
+  background-color: #E0FFFF;
+  height: 100%;
 }
