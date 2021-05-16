@@ -1,5 +1,6 @@
 import React from 'react'
 import { Table } from 'antd'
+import Navbar from "./../../components/NavBar";
 import './../../index.css'
 
 const EvaluationTablePage = () => {
@@ -44,10 +45,13 @@ const EvaluationTablePage = () => {
   ]
 
   return (
-    <div className="blue-container">
-      <Table columns={columns} dataSource={data} />
+    <div>
+      <Navbar />
+      <div className="blue-container">
+        <Table style={{paddingTop: '40px'}} columns={columns} dataSource={data} />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default EvaluationTablePage
+export default EvaluationTablePage;
