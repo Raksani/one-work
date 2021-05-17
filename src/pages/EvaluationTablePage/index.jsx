@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table } from 'antd'
+import { useCookies } from "react-cookie";
+import axios from 'axios'
+
 import Navbar from "./../../components/NavBar";
 import './../../index.css'
+import { API_URL } from "./../constants";
 
 const EvaluationTablePage = () => {
+  const [cookies] = useCookies(["role","token"]);
+  const [evaluateScore,setEvaluateScore] = useState()
+  const token = cookies.token
+  
   const columns = [
     {
       title: 'Name',
@@ -23,32 +31,29 @@ const EvaluationTablePage = () => {
     }
   ]
 
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      position: 'Software Developer',
-      score: 4.5
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      position: 'Junior Software Developer',
-      score: 5.0
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      position: 'Senior Software Developer',
-      score: 3.25
-    }
-  ]
+  useEffect(() => {
+    axios.get(`${API_URL}/evaluate/score/list`,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Authorization" : `Bearer ${token}`
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data)
+        setEvaluateScore(res.data)
+      })
+      .catch((error) => {
+          alert('Error')
+      });
+  }, [token, setEvaluateScore])
 
   return (
     <div>
       <Navbar />
-      <div className="blue-container">
-        <Table style={{paddingTop: '40px'}} columns={columns} dataSource={data} />
+      <div className="blue-bg">
+        <Table style={{padding: '40px'}} columns={columns} dataSource={evaluateScore} />
       </div>
     </div>
   );

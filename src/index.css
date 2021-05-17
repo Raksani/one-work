@@ -26,3 +26,8 @@ code {
   height: 100vh;
 }
 
+.blue-bg {
+  background-color: #E0FFFF;
+  height: 100%;
+}
+

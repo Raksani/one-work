@@ -23,6 +23,7 @@ const SignInPage = ({ setCookies }) => {
       })
       .then((res) => {
         alert('Sign in success!')
+        setCookies("token", res.data.access_token, { path: "/" });
         if (values.username[0] === "B") {
           setCookies("role", "boss", { path: "/" });
           history.push("/evaluation-table");
@@ -31,7 +32,6 @@ const SignInPage = ({ setCookies }) => {
           history.push("/evaluation");
         } else if(values.username[0] === "A"){
           setCookies("role", "admin", { path: "/" });
-          setCookies("token", res.data.access_token, { path: "/" });
           history.push("/admin");
         }
       })
