@@ -1,30 +1,47 @@
-import React, { useState } from "react";
+import React, { useCallback } from "react";
 
 import { Card, Space, Input, Button, DatePicker, Form } from "antd";
 import moment from "moment";
 import { PasswordInput } from "antd-password-input-strength";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import qs from 'qs'
 
 import FormInput from "./../../components/FormInput";
 import ValidatePassword from "./../../components/ValidatePassword";
+import { API_URL } from './../constants'
 
 import "./styled.css";
 import "./../../index.css";
 
 const RegisterPage = () => {
-  const [result, setResult] = useState({});
-
+  const history = useHistory()
+  
   const disabledDate = (current) => {
     return current && current > moment().endOf("day");
   };
 
-  const onFinish = (fieldsValue) => {
+  const onFinish = useCallback((fieldsValue) => {
     const resultValues = {
-      ...fieldsValue,
-      date: fieldsValue["date"].format("DD-MM-YYYY"),
+      identity_id: fieldsValue.employeeID,
+      password: fieldsValue.password,
+      full_name: `${fieldsValue["firstName"]} ${fieldsValue["lasttName"]}`,
+      birth_date: fieldsValue["date"].format("DD-MM-YYYY"),
     };
-    setResult(resultValues);
-    console.log(resultValues);
-  };
+
+    axios.post(`${API_URL}/register`, qs.stringify(resultValues), {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+      .then((res) => {
+        res && alert('Registeration success!')
+        history.push('/')
+      })
+      .catch(error => {
+        alert('Incorrect employee ID')
+    });
+  }, [history]);
 
   return (
     <div className="blue-container">
@@ -38,7 +55,7 @@ const RegisterPage = () => {
                 name="employeeID"
                 message="Please input your Employee ID"
               >
-                <Input autocomplete="off" placeholder="Employee ID" />
+                <Input autoComplete="off" placeholder="Employee ID" />
               </FormInput>
               <ValidatePassword
                 label="Password"
@@ -52,14 +69,14 @@ const RegisterPage = () => {
                 name="firstName"
                 message="Please input your first name"
               >
-                <Input autocomplete="off" placeholder="First Name" />
+                <Input autoComplete="off" placeholder="First Name" />
               </FormInput>
               <FormInput
                 label="Last Name"
                 name="lasttName"
                 message="Please input your last name"
               >
-                <Input autocomplete="off" placeholder="Last Name" />
+                <Input autoComplete="off" placeholder="Last Name" />
               </FormInput>
               <Form.Item
                 label="Birth date:"
@@ -72,9 +89,11 @@ const RegisterPage = () => {
               </Form.Item>
             </div>
             <div className="btn-regis">
-              <Button type="primary" htmlType="submit">
-                Register
-              </Button>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Register
+                </Button>
+              </Form.Item>
             </div>
           </Form>
         </Space>

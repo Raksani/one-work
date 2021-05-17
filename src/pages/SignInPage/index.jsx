@@ -1,26 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, Space, Input, Button, Form } from "antd";
 import { Link, useHistory } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
+import axios from "axios";
+import qs from 'qs'
 
 import FormInput from "./../../components/FormInput";
+import {API_URL} from './../constants'
 
 import "./../../index.css";
 import "./styled.css";
 
-const SignInPage = ({setCookies}) => {
-  const history = useHistory()
-  const [loginValue, setLoginValue] = useState({})
+const SignInPage = ({ setCookies }) => {
+  const history = useHistory();
 
   const onFinish = (values) => {
-    setLoginValue(values)
-    console.log("Success:", values);
+    axios
+      .post(`${API_URL}/token`, qs.stringify(values), {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+      .then((res) => {
+        alert('Sign in success!')
+        if (values.username[0] === "B") {
+          setCookies("role", "boss", { path: "/" });
+          history.push("/evaluation-table");
+        } else if (values.username[0] === "E") {
+          setCookies("role", "employee", { path: "/" });
+          history.push("/evaluation");
+        }
+      })
+      .catch((error) => {
+        alert("Incorrect employee ID");
+      });
   };
-
-  const onSubmit = () => {
-    setCookies('role', 'employee', { path: '/' })
-    history.push('/evaluation')
-  }
 
   return (
     <div className="blue-container">
@@ -30,11 +44,11 @@ const SignInPage = ({setCookies}) => {
             <h2>Sign In</h2>
             <FormInput
               label="Employee ID"
-              name="employeeID"
+              name="username"
               message="Please input your Employee ID"
             >
               <Input
-                autocomplete="off"
+                autoComplete="off"
                 size="large"
                 placeholder="Employee ID"
                 prefix={<UserOutlined />}
@@ -52,7 +66,7 @@ const SignInPage = ({setCookies}) => {
             </Link>
             <Form.Item>
               <div className="btn-signin">
-                <Button onClick={onSubmit} type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit">
                   Sign In
                 </Button>
               </div>

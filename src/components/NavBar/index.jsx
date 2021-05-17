@@ -2,13 +2,13 @@ import React from "react";
 import "./styled.css";
 import "./../../index.css";
 import { Link } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { useCookies } from 'react-cookie';
 
 const NavBar = () => {
   const [cookies, setCookies, removeCookie] = useCookies(["role"]);
 
   const handleClickSignout = () => {
-    removeCookie("role");
+    removeCookie("role",{ path: '/' });
   };
 
   return (
