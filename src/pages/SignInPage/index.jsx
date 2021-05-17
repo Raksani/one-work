@@ -29,6 +29,10 @@ const SignInPage = ({ setCookies }) => {
         } else if (values.username[0] === "E") {
           setCookies("role", "employee", { path: "/" });
           history.push("/evaluation");
+        } else if(values.username[0] === "A"){
+          setCookies("role", "admin", { path: "/" });
+          setCookies("token", res.data.access_token, { path: "/" });
+          history.push("/admin");
         }
       })
       .catch((error) => {

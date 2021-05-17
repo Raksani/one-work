@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 
 const NavBar = () => {
-  const [cookies, setCookies, removeCookie] = useCookies(["role"]);
+  const [cookies, setCookies, removeCookie] = useCookies(["role","token"]);
 
   const handleClickSignout = () => {
     removeCookie("role",{ path: '/' });
+    removeCookie("token",{ path: '/' });
   };
 
   return (

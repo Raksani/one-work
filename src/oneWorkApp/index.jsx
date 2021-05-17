@@ -5,11 +5,12 @@ import SignInPage from "../pages/SignInPage";
 import RegisterPage from "../pages/RegisterPage";
 import EvaluationPage from "../pages/EvaluationPage";
 import EvaluationTablePage from "../pages/EvaluationTablePage";
+import GenerateIdPage from '../pages/GenerateIdPage'
 
 import { useCookies } from "react-cookie";
 
 const OneWorkApp = () => {
-  const [cookies, setCookies] = useCookies(["role"]);
+  const [cookies, setCookies] = useCookies(["role", "token"]);
   console.log(
     "🚀 ~ file: index.jsx ~ line 12 ~ OneWorkApp ~ cookies",
     cookies.role
@@ -37,6 +38,9 @@ const OneWorkApp = () => {
           <EvaluationTablePage />
         </Route>
       )}
+       {cookies.role === "admin" && <Route path="/admin">
+        <GenerateIdPage/>
+      </Route>}
     </Switch>
   );
 };
