@@ -1,8 +1,7 @@
-import React, { Component } from "react";
-import { Card, Col, Row, Space, Button, Rate } from "antd";
-import NavBar from "../../components/NavBar";
-import "./styled.css";
-import "./../../index.css";
+import React, { Component } from 'react'
+import { Card, Col, Row, Space, Button, Rate } from 'antd'
+import NavBar from '../../components/NavBar'
+import './styled.css'
 
 export default class EvaluationPage extends Component {
   state = {
@@ -61,7 +60,7 @@ export default class EvaluationPage extends Component {
 
     console.log(this.state);
     return (
-      <div className="blue-container">
+      <div className="container">
         <NavBar />
         <div className="card-container">
           <Row gutter={[16, 16]}>

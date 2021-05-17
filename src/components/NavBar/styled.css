@@ -1,5 +1,5 @@
 .header {
-  position: fixed;
+  /* position: fixed; */
   display: block;
   top: 0;
   left: 0;
@@ -8,6 +8,7 @@
   height: 60px;
   
   background: #242331;
+  padding: 10px;
 }
 
 .text {
@@ -20,4 +21,10 @@
   letter-spacing: 0.15em;
 
   color: #fdfffc;
+}
+
+.signout {
+  color: white;
+  position: fixed;
+  top: 10px;
 }
