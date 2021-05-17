@@ -30,7 +30,7 @@ const OneWorkApp = () => {
       )}
       {cookies.role === "employee" && (
         <Route path="/evaluation">
-          <EvaluationPage />
+          <EvaluationPage cookiesToken={cookies.token} />
         </Route>
       )}
       {cookies.role === "boss" && (
