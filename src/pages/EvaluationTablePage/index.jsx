@@ -41,7 +41,6 @@ const EvaluationTablePage = () => {
         }
       )
       .then((res) => {
-        console.log(res.data)
         setEvaluateScore(res.data)
       })
       .catch((error) => {

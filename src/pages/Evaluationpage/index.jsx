@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Col, Row, Space, Button, Rate } from "antd";
 import axios from "axios";
+import { CheckCircleTwoTone } from "@ant-design/icons";
 
 import NavBar from "../../components/NavBar";
 import { API_URL } from "./../constants";
@@ -36,7 +37,6 @@ export default class EvaluationPage extends Component {
     axios
       .get(`${API_URL}/users/me`, headers)
       .then((res) => {
-        console.log(res.data);
         this.setState({
           profile: {
             fullName: res.data.full_name,
@@ -52,11 +52,11 @@ export default class EvaluationPage extends Component {
       .get(`${API_URL}/evaluate/list`, headers)
       .then((res) => {
         nameArray = res.data;
-        nameArray.map((name, id) => {
+        nameArray.map((name) => {
           return resultWithId.push({
             name: name.name,
             position: "Employee",
-            id: id,
+            identity_id: name.identity_id,
             score: 0,
           });
         });
@@ -68,24 +68,52 @@ export default class EvaluationPage extends Component {
   }
 
   handleChange = (id, newScore) => {
-    const index = this.state.rates.findIndex((x) => x.id === id);
+    const index = this.state.rates.findIndex((x) => x.identity_id === id);
     this.setState({
       rates: [
         ...this.state.rates.slice(0, index),
         Object.assign({}, this.state.rates[index], {
           score: newScore,
-          id: id,
+          identity_id: id,
         }),
         ...this.state.rates.slice(index + 1),
       ],
     });
   };
 
+  onClickSubmit = () => {
+    const evaluated = this.state.rates.map((scoreValue) => {
+      return {
+        identity_id: scoreValue.identity_id,
+        score: scoreValue.score,
+      };
+    });
+    const evaluatedList = { evaluate_list: evaluated };
+
+    axios
+      .post(`${API_URL}/send/evaluate/score`, evaluatedList, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.props.cookiesToken}`,
+        },
+      })
+      .then((res) => {
+        res && alert("Evaluation success!");
+        this.setState(state => (state.profile.evaluateTime = 'hasUpdated', state))
+      })
+      .catch((error) => {
+        alert("Error");
+      });
+  };
+
   render() {
-    console.log(this.state);
     return (
       <div className="container">
         <NavBar />
+        <Space direction="vertical" style={{ marginLeft: "43%" }}>
+          <h2>Name: {this.state.profile.fullName}</h2>
+          <h2>Your Current Score: {this.state.myScore}</h2>
+        </Space>
         {this.state.profile.evaluateTime === null ? (
           <div>
             <div className="card-container">
@@ -100,7 +128,10 @@ export default class EvaluationPage extends Component {
                         <p>Score: {employee.score}</p>
                         <Rate
                           allowHalf
-                          onChange={this.handleChange.bind(this, employee.id)}
+                          onChange={this.handleChange.bind(
+                            this,
+                            employee.identity_id
+                          )}
                         />
                       </Space>
                     </Card>
@@ -110,6 +141,7 @@ export default class EvaluationPage extends Component {
             </div>
             <div className="btn-submit">
               <Button
+                onClick={this.onClickSubmit}
                 style={{ margin: "0px 40px 60px 40px" }}
                 type="primary"
                 block
@@ -119,7 +151,10 @@ export default class EvaluationPage extends Component {
             </div>
           </div>
         ) : (
-          <div>Already Submit</div>
+          <Space direction="vertical" style={{ alignItems: 'center', width: '100%', margin: '130px 0' }}>
+            <CheckCircleTwoTone style={{ fontSize: '200px' }}/>
+            <h1>Already submit the evaluation</h1>
+          </Space>
         )}
       </div>
     );

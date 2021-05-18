@@ -11,10 +11,6 @@ import { useCookies } from "react-cookie";
 
 const OneWorkApp = () => {
   const [cookies, setCookies] = useCookies(["role", "token"]);
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 12 ~ OneWorkApp ~ cookies",
-    cookies.role
-  );
 
   return (
     <Switch>
